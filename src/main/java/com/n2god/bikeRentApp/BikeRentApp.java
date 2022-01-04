@@ -33,7 +33,8 @@ public class BikeRentApp {
         bikeService.add(bike1);
         bike1 = new NewBikeDto(1L, "New Kross", "ABC999", 10, 90); //bikeId
         bikeService.add(bike1);
-
+        NewBikeDto bike2 = new NewBikeDto(2L, "HORN Speeder 3, 27 cali męski", "FSO52345", 50, 150);
+        bikeService.add(bike2);
         double payment = bikeService.rentForHours(1L, 2, "borrowerId_01");
         System.out.printf("Należność za wypożyczenie roweru o id: %s wynosi: %.2f\n", bike1.getId(), payment);
         bikeService.returnBike(1L);
