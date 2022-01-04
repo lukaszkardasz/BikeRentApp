@@ -9,6 +9,8 @@ public class BikeRentApp {
 
     public static void main(String[] args) {
         ConfigurableApplicationContext context = SpringApplication.run(BikeRentApp.class, args);
+
+/*
         Bike bike1 = new Bike(1L, "Kross Esker 4.0, 29 cali męski", "KRS12345", 30, 100);
         BikeRepository bikeRepository = context.getBean(BikeRepository.class);
         bikeRepository.save(bike1);
@@ -25,5 +27,15 @@ public class BikeRentApp {
         System.out.println("Odczyt z bazy bike 1");
         //bikeRepository.findById(1L).ifPresentOrElse(System.out::println, () -> System.out.println("Brak roweru z id 1L"));
         bikeRepository.findById(1L).orElseThrow(() -> new RuntimeException("bike doesnt exist"));
+*/
+        NewBikeDto bike1 = new NewBikeDto(1L, "Kross Esker 4.0, 29 cali męski", "KRS12345", 30, 100);
+        BikeService bikeService = context.getBean(BikeService.class);
+        bikeService.add(bike1);
+        bike1 = new NewBikeDto(1L, "New Kross", "ABC999", 10, 90); //bikeId
+        bikeService.add(bike1);
+
+        double payment = bikeService.rentForHours(1L, 2, "borrowerId_01");
+        System.out.printf("Należność za wypożyczenie roweru o id: %s wynosi: %.2f\n", bike1.getId(), payment);
+        bikeService.returnBike(1L);
     }
 }

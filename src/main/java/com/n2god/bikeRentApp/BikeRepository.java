@@ -16,7 +16,11 @@ public class BikeRepository {
 
     @Transactional
     public void save(Bike bike){
-        entityManager.persist(bike);
+        if (exists(bike)){
+            entityManager.merge(bike);
+        } else {
+            entityManager.persist(bike);
+        }
     }
 
     @Transactional
@@ -36,5 +40,9 @@ public class BikeRepository {
             Bike bike = bikeById.get();
             entityManager.remove(bike);
         }
+    }
+
+    private boolean exists(Bike bike){
+        return entityManager.find(Bike.class, bike.getId()) != null;
     }
 }
