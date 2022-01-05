@@ -17,12 +17,7 @@ public class BikeService {
     @Transactional
     public void add(NewBikeDto newBike){
         Bike bike = new Bike(newBike.getId(), newBike.getModel(), newBike.getSerialNo(), newBike.getHourPrice(), newBike.getDayPrice());
-        if (bikeRepository.findById(bike.getId()).isPresent()){
-            bikeRepository.update(bike);
-        }
-        else {
             bikeRepository.save(bike);
-        }
     }
 
     @Transactional
@@ -40,7 +35,7 @@ public class BikeService {
     @Transactional
     public double rentForDays(Long bikeId, int days, String borrowerId){
         LocalDateTime dateOfReturn = LocalDateTime.now().plusDays(days);
-        return updateBike(bikeId, dateOfReturn, borrowerId).getDayPrice();
+        return updateBike(bikeId, dateOfReturn, borrowerId).getDayPrice() * days;
     }
 
     @Transactional
